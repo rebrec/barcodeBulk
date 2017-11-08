@@ -66,15 +66,18 @@ const generateClick = () => {
   let title = $('#txt-title').val();
 
   let datasource = parseDatasource();
-  let componentHtml = '<h1 class="col-sm-12">' + title + '</h1>';
+  let componentHtml = '';
+  componentHtml += '<h1 class="col-sm-12">' + title + '</h1>';
   for (let i = 0; i < datasource.length; i++) {
     let elt = datasource[i];
     let label = elt.label;
     let barcodeNumber = elt.barcode;
     let template = barcodeHtml(barcodeNumber);
     let html = '';
-    html += '<div class="col-sm-2">' + label + '</div>';
-    html += '<div class="col-sm-10">' + template + '</div>';
+    html += '<div class="row">';
+    html += '   <div class="col-sm-2">' + label + '</div>';
+    html += '   <div class="col-sm-10">' + template + '</div>';
+    html += '</div>'
     componentHtml += html;
   }
   $('#div-result').html(componentHtml);
@@ -82,3 +85,4 @@ const generateClick = () => {
 };
 
 $("#btn-generate").click(generateClick);
+$("#btn-print").click(_=>{window.print();});
