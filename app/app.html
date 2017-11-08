@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Electron Boilerplate</title>
+
+</head>
+<body>
+
+<div class="container" >
+  <!--<h1 id="greet"></h1>-->
+  <!--<p>-->
+  <!--Welcome to <a href="http://electron.atom.io" class="js-external-link">Electron</a> app running on this <strong-->
+  <!--id="os"></strong> machine.-->
+  <!--</p>-->
+  <!--<p>-->
+  <!--App author: <strong id="author"></strong>-->
+  <!--</p>-->
+  <p>
+    Environment: <strong id="env"></strong>
+  </p>
+  <!--<p>-->
+  <!--Electron version: <strong id="electron-version"></strong>-->
+  <!--</p>-->
+  <div class="row">
+    <div class="col-sm-2">Titre de la planche</div>
+    <input id="txt-title" type="text" class="col-sm-10"/>
+  </div>
+  <div class="row">
+    <textarea id="txt-datasource" rows="10" class="col-sm-12">
+Description 1;123456
+Description 2;654321
+Description 3;987654
+</textarea>
+  </div>
+  <div class="row">
+    <button id="btn-generate" class="col-sm-12">Générer</button>
+  </div>
+  <div class="row">
+    <button id="btn-print" class="col-sm-12">Imprimer</button>
+  </div>
+  <div class="row" id="div-result">
+blah
+  </div>
+
+</div>
+
+
+<script>if (typeof module === 'object') {
+  window.module = module;
+  module = undefined;
+}</script>
+<!-- normal script imports etc  -->
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script>window.Tether = require('tether');</script>
+<script>require('bootstrap');</script>
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+<script src="app.js"></script>
+</body>
+</html>
