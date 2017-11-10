@@ -30,16 +30,14 @@ const osMap = {
   linux: "Linux"
 };
 
-// JsBarcode("#code128", "123456", { text: "Chaussures" });
-
-
-const barcodeHtml = (barcodeNumber) => {
+const barcodeHtml = (barcodeNumber, opt={}) => {
   let template = '';
   template += '<svg class="barcode" ';
   template += '  jsbarcode-format="code128" ';
   template += '  jsbarcode-value="' + barcodeNumber + '" ';
   template += '  jsbarcode-textmargin="0" ';
-  template += '  jsbarcode-fontoptions="bold"> ';
+  // if (opt.barcodeHeight) template += '  jsbarcode-height="' + opt.barcodeHeight + '" ';
+  // if (opt.barcodeWidth)  template += '  jsbarcode-width="' + opt.barcodeWidth + '" ';
   template += '    </svg> ';
   return template;
 };
@@ -63,23 +61,38 @@ const parseDatasource = () => {
 
 
 const generateClick = () => {
+
+  let colSettings = {
+    colNumber: 2,
+    labelClass: 'col-sm-2',
+    barcodeClass:'col-sm-2',
+    colClass:'col-sm-4',
+  };
+
   let title = $('#txt-title').val();
 
   let datasource = parseDatasource();
   let componentHtml = '';
-  componentHtml += '<h1 class="col-sm-12">' + title + '</h1>';
+  componentHtml += '<h1 class="title col-sm-12">' + title + '</h1><div class="row">';
   for (let i = 0; i < datasource.length; i++) {
     let elt = datasource[i];
     let label = elt.label;
     let barcodeNumber = elt.barcode;
-    let template = barcodeHtml(barcodeNumber);
+    let template = barcodeHtml(barcodeNumber, colSettings);
     let html = '';
-    html += '<div class="row">';
-    html += '   <div class="col-sm-2">' + label + '</div>';
-    html += '   <div class="col-sm-10">' + template + '</div>';
-    html += '</div>'
+    // html += '<div class="row">';
+    html += '   <div class="' + colSettings.colClass + ' text-center">';
+    html += '      <div class="row">';
+    html += '         <div class="col-sm-12 barcode-label">' + label + '</div>';
+    html += '      </div>';
+    html += '      <div class="row">';
+    html += '         <div class="col-sm-12">' + template + '</div>';
+
+    html += '      </div>';
+    html += '   </div>';
     componentHtml += html;
   }
+  componentHtml += '</div>';
   $('#div-result').html(componentHtml);
   JsBarcode(".barcode").init();
 };

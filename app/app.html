@@ -2,45 +2,46 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Electron Boilerplate</title>
+  <title>Barcode Bulk</title>
 
 </head>
 <body>
 
-<div class="container" >
-  <!--<h1 id="greet"></h1>-->
-  <!--<p>-->
-  <!--Welcome to <a href="http://electron.atom.io" class="js-external-link">Electron</a> app running on this <strong-->
-  <!--id="os"></strong> machine.-->
-  <!--</p>-->
-  <!--<p>-->
-  <!--App author: <strong id="author"></strong>-->
-  <!--</p>-->
-  <p>
-    Environment: <strong id="env"></strong>
-  </p>
-  <!--<p>-->
-  <!--Electron version: <strong id="electron-version"></strong>-->
-  <!--</p>-->
-  <div class="row">
-    <div class="col-sm-2">Titre de la planche</div>
-    <input id="txt-title" type="text" class="col-sm-10"/>
-  </div>
-  <div class="row">
-    <textarea id="txt-datasource" rows="10" class="col-sm-12">
+
+<div class="container-fluid">
+  <div class="noPrint">
+    <div class="row">
+      <div class="col-sm-2 barcode-label">Titre de la planche</div>
+      <input id="txt-title" type="text" class="col-sm-10" value="Super Titre"/>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <span class="barcode-label">
+          Liste des Code Barres
+          </span>
+        <p>
+          <i>
+            Ajouter un code barre par ligne.
+            <br/>
+            Chaque ligne doit être de la forme : DESCRIPTION;XXXXXX
+            <br/>(où XXXXXX correspond à un code barre)
+          </i>
+        </p>
+
+      </div>
+    <textarea id="txt-datasource" rows="10" class="col-sm-10">
 Description 1;123456
-Description 2;654321
-Description 3;987654
+
 </textarea>
-  </div>
-  <div class="row">
-    <button id="btn-generate" class="col-sm-12">Générer</button>
-  </div>
-  <div class="row">
-    <button id="btn-print" class="col-sm-12">Imprimer</button>
+    </div>
+    <div class="row">
+      <button id="btn-generate" class="col-sm-12">Générer</button>
+    </div>
+    <div class="row">
+      <button id="btn-print" class="col-sm-12">Imprimer</button>
+    </div>
   </div>
   <div id="div-result">
-blah
   </div>
 
 </div>

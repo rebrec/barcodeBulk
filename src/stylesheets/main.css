@@ -1,24 +1,26 @@
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
-  color: #525252;
-}
-
-a {
-  text-decoration: none;
-  color: #cb3837;
-}
-
-.container {
+.title {
+  margin-bottom: 2em;
   text-align: center;
 }
+
+.barcode-label {
+  font-weight: bold;
+  font-size: larger;
+}
+
+@media print {
+  .noPrint {
+    display: none;
+  }
+
+  /*.container {*/
+  /*width: auto;*/
+  /*}*/
+  @page {
+    /*size: A4;*/
+    margin: 0;
+    margin-top: 5mm;
+  }
+
+}
+

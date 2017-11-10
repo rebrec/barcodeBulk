@@ -31,7 +31,7 @@ if (env.name !== "production") {
 }
 
 app.on("ready", () => {
-  setApplicationMenu();
+  // setApplicationMenu();
 
   const mainWindow = createWindow("main", {
     width: 1000,
