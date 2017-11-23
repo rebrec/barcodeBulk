@@ -1,11 +1,24 @@
+#main-header {
+  height: 300px;
+}
 .title {
   margin-bottom: 2em;
   text-align: center;
 }
 
+#image-container {
+  max-height: 100%;
+  display: block;
+  max-width:100%;
+}
+
 .barcode-label {
   font-weight: bold;
   font-size: larger;
+}
+
+svg > g > text {
+  font-weight: bold  !important;
 }
 
 @media print {

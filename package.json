@@ -2,7 +2,7 @@
   "name": "barcodeBulk",
   "productName": "Barcode Bulk",
   "description": "Generateur de Planche de codebarres",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "author": "rebrec (François Laplaud)",
   "copyright": "",

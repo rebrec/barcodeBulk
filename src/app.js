@@ -30,13 +30,14 @@ const osMap = {
   linux: "Linux"
 };
 
+
 const barcodeHtml = (barcodeNumber, opt={}) => {
   let template = '';
   template += '<svg class="barcode" ';
   template += '  jsbarcode-format="code128" ';
   template += '  jsbarcode-value="' + barcodeNumber + '" ';
   template += '  jsbarcode-textmargin="0" ';
-  // if (opt.barcodeHeight) template += '  jsbarcode-height="' + opt.barcodeHeight + '" ';
+  if (opt.barcodeHeight) template += '  jsbarcode-height="' + opt.barcodeHeight + '" ';
   // if (opt.barcodeWidth)  template += '  jsbarcode-width="' + opt.barcodeWidth + '" ';
   template += '    </svg> ';
   return template;
@@ -48,12 +49,18 @@ const parseDatasource = () => {
   for (let i = 0; i < textData.length; i++) {
     let elt = {};
     let subArray = textData[i].split(';');
-    if (subArray.length !== 2) {
-      console.warn('Skipping value : ' + subArray);
-      continue;
+    if (subArray.length === 1) {
+      if (subArray[0].length ===0){
+        console.warn('Skipping value : ' + subArray);
+        continue;
+      } else {
+        elt.label = '';
+        elt.barcode = subArray[0].trim();
+      }
+    } else {
+      elt.label = subArray[0].trim();
+      elt.barcode = subArray[1].trim();
     }
-    elt.label = subArray[0].trim();
-    elt.barcode = subArray[1].trim();
     result.push(elt);
   }
   return result;
@@ -61,19 +68,28 @@ const parseDatasource = () => {
 
 
 const generateClick = () => {
-
+  saveSettings();
   let colSettings = {
     colNumber: 2,
     labelClass: 'col-sm-2',
     barcodeClass:'col-sm-2',
     colClass:'col-sm-4',
+    barcodeHeight: 40,
   };
-
+  let height = $('#settings-panel-barcode-height').val();
+  let isnum = /^\d+$/.test(height);
+  if (isnum){ colSettings.barcodeHeight = height }
   let title = $('#txt-title').val();
 
   let datasource = parseDatasource();
   let componentHtml = '';
-  componentHtml += '<h1 class="title col-sm-12">' + title + '</h1><div class="row">';
+  componentHtml += '<div class="row">';
+  componentHtml += '  <h1 class="title col-sm-8">' + title + '</h1>';
+  componentHtml += '  <div class="col-sm-4" id="main-header">';
+  componentHtml += '    <img src=""  id="image-container" />';
+  componentHtml += '  </div>';
+  componentHtml += '</div>';
+  componentHtml += '  <div class="row">';
   for (let i = 0; i < datasource.length; i++) {
     let elt = datasource[i];
     let label = elt.label;
@@ -94,8 +110,51 @@ const generateClick = () => {
   }
   componentHtml += '</div>';
   $('#div-result').html(componentHtml);
+  let output = document.getElementById('image-container');
+  let file = $('#input-fileload')[0].files[0];
+
+  var reader = new FileReader();
+  reader.onload = function(){
+    output.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+
+
+  // let src = URL.createObjectURL(file);
+  // output.src = src;
+  // console.log(src);
   JsBarcode(".barcode").init();
 };
 
+const settingsClick = () => {
+  $('.settings-panel').toggle();
+};
+
+const loadSettings = (settings={}) =>{
+  if (settings.hasOwnProperty('title')){      $('#txt-title').val(      settings.title); }
+  if (settings.hasOwnProperty('datasource')){ $('#txt-datasource').val( settings.datasource); }
+  // if (settings.hasOwnProperty('imageFile')){  $('#input-fileload').val( settings.imageFile); }
+  if (settings.hasOwnProperty('barcodeHeight')){  $('#settings-panel-barcode-height').val( settings.barcodeHeight); }
+};
+
+const saveSettings = () =>{
+  let settings = {};
+  let title = $('#txt-title').val();
+  let textData = $('#txt-datasource').val();
+  let file = $('#input-fileload')[0].files[0].path;
+  // let file = $('#input-fileload')[0].files[0];
+  let height = $('#settings-panel-barcode-height').val();
+
+  settings.title = title;
+  settings.datasource = textData;
+  settings.imageFile = file;
+  settings.barcodeHeight = height;
+  localStorage.setItem('lastData', JSON.stringify(settings));
+};
+
+$('.settings-panel').hide();
+$("#btn-settings").click(settingsClick);
 $("#btn-generate").click(generateClick);
 $("#btn-print").click(_=>{window.print();});
+
+loadSettings(JSON.parse(localStorage.getItem('lastData')));
